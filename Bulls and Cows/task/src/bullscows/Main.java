@@ -14,13 +14,13 @@ public class Main {
 
         //secretCode = getCodeFromPlayer(); // pobranie SecretCode od gracza i wpisanie do tablicy
 
-        int[] quessCode = getCodeFromPlayer(); // pobranie quessCode od gracza i wpisanie do tablicy
-
+        int[] guessCode = getCodeFromPlayer(); // pobranie quessCode od gracza i wpisanie do tablicy
+        checkCodes(secretCode, guessCode);
 
         endGame(secretCode, bull, cows);
 
 
-        System.out.println("The secret code is prepared: ****.");
+/*        System.out.println("The secret code is prepared: ****.");
 
         System.out.println("Turn 1. Answer:\n" +
                 "1234\n" +
@@ -38,28 +38,48 @@ public class Main {
                 "Grade: 4 bulls.");
         //win(secretCode); // wyswietla tekst wygranej
         System.out.println("Congrats! The secret code is 9305.");
+*/
     }
 
-    private static int[] getCodeFromPlayer() { // pobranie kody do porównania od gracza
+    private static void checkCodes(int[] secretCode, int[] guessCode) {
+        bull = 0;
+        cows = 0;
+        for (int i = 0; i < secretCode.length; i++) { // bull++ gdy pozycja i cyfra jest taka sama
+            if (secretCode[i] == guessCode[i]) {
+                bull++;
+            }
+        }
+        for (int i = 0; i < guessCode.length; i++) { // cows++ gdy taka sama cyfra jest w kodzie
+            for (int j = 0; j < secretCode.length; j++) {
+                if (i != j) {
+                    if (guessCode[i] == secretCode[j]) {
+                        cows++;
+                    }
+                }
+            }
+        }
+    }
+
+    private static int[] getCodeFromPlayer() { // pobranie kodu do porównania od gracza
         Scanner scanner = new Scanner(System.in);
-        int[] guessCode = Arrays.stream(scanner.nextLine().split("")).mapToInt(Integer::parseInt).toArray();
-        return guessCode;
+        int[] code = Arrays.stream(scanner.nextLine().split("")).mapToInt(Integer::parseInt).toArray();
+        return code;
     }
 
     private static void win(int[] secretCode) {
         System.out.printf("The secret code is %d.", secretCode);
     }
 
-    private static void endGame(int[] secretCode, int bull, int cows) {
+    private static void endGame(int[] code, int bull, int cows) {
         System.out.println("Grade: ");
         if (bull > 0) System.out.print(bull + " buss(s)");
         if (cows > 0) System.out.print(" and " + cows + " cows(s). ");
-        System.out.println("The secret code is ".concat(printCode(secretCode)));
+        System.out.println("The secret code is ".concat(printCode(code)));
     }
 
-    private static String printCode(int[] secretCode) { //wyswietlenie tablicy 1234
+    private static String printCode(int[] code) { //wyswietlenie tablicy 1234
         String text = "";
-        for (int number : secretCode) {
+        for (int number : code) {
             text += number;
         }
         return text;
