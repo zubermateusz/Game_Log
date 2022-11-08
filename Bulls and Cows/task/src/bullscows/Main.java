@@ -15,9 +15,9 @@ public class Main {
         //secretCode = getCodeFromPlayer(); // pobranie SecretCode od gracza i wpisanie do tablicy
 
         int[] guessCode = getCodeFromPlayer(); // pobranie quessCode od gracza i wpisanie do tablicy
-        checkCodes(secretCode, guessCode);
+        checkCodes(secretCode, guessCode); // porownanie kodow
 
-        endGame(secretCode, bull, cows);
+        endGame(secretCode, bull, cows); // wyswietlenie wyniku konczacego rozgrywke
 
 
 /*        System.out.println("The secret code is prepared: ****.");
@@ -72,9 +72,12 @@ public class Main {
 
     private static void endGame(int[] code, int bull, int cows) {
         System.out.println("Grade: ");
-        if (bull > 0) System.out.print(bull + " buss(s)");
-        if (cows > 0) System.out.print(" and " + cows + " cows(s). ");
-        System.out.println("The secret code is ".concat(printCode(code)));
+        if (bull == 0 && cows == 0) {
+            System.out.print("None. ");
+        }
+        if (bull > 0) System.out.print(bull + " bull(s)");
+        if (cows > 0) System.out.print(" and " + cows + " cow(s). ");
+        System.out.print("The secret code is ".concat(printCode(code)));
     }
 
     private static String printCode(int[] code) { //wyswietlenie tablicy 1234
