@@ -59,7 +59,7 @@ public class Main {
 
     private static StringBuilder generateCode(int codeLength) {
         StringBuilder code = new StringBuilder(codeLength);
-        if (codeLength > 10) {
+        if (codeLength > 36) {
             System.out.println("Error: can't generate a secret number with a " +
                     "length of " + codeLength + " because there aren't enough unique digits.");
             System.exit(0);
@@ -109,18 +109,13 @@ public class Main {
     } // wyswietlenie The secret code is secretCode
 
     private static void endGame(StringBuilder code, int bull, int cows) {
-
-
         if (bull == 0 && cows == 0) {
             System.out.println("Grade: None.");
-
         } else {
-
             if (bull == code.length()) {
                 System.out.println("Grade: " + bull + " bulls");
                 System.out.println("Congratulations! You guessed the secret code.");
             } else {
-
                 System.out.println("Grade: " + bull + " bulls" + " and " + cows + " cows");
 /*                System.out.print("Grade: ");
                 if (bull == 1) System.out.print(bull + " bull");
