@@ -13,11 +13,15 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please, enter the secret code's length:");
+        System.out.println("Input the length of the secret code:");
         int numberOfCodeDigits = scanner.nextInt();// pobranie od gracza dlugosci kodu
+
+        System.out.println("Input the number of possible symbols in the code:");
+        int numberOfLetters = scanner.nextInt();
+
         System.out.println("Okay, let's start a game!");
 
-        StringBuilder secretCode = generateCode(numberOfCodeDigits);//{2, 4, 7, 3}; // = new int[4]; // inicjalizacja miejsca na secretCode
+        StringBuilder secretCode = generateCode(numberOfCodeDigits, numberOfLetters);//{2, 4, 7, 3}; // = new int[4]; // inicjalizacja miejsca na secretCode
         StringBuilder playerCode;
 
         int turn = 0;
@@ -57,7 +61,7 @@ public class Main {
 */
     }
 
-    private static StringBuilder generateCode(int codeLength) {
+    private static StringBuilder generateCode(int codeLength, int numberOfLetters) {
         StringBuilder code = new StringBuilder(codeLength);
         if (codeLength > 36) {
             System.out.println("Error: can't generate a secret number with a " +
@@ -65,8 +69,18 @@ public class Main {
             System.exit(0);
         } else {
             StringBuilder digitBase = new StringBuilder("1234567890");
+            StringBuilder lettersBase = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
+            digitBase.append(lettersBase);
+            String text = "The secret is prepared: ";
             for (int i = 0; i < codeLength; i++) {
-                int temp = new Random().nextInt(digitBase.length());
+                text += "*";
+            }
+            text += " (0-9, a-" + digitBase.charAt(numberOfLetters - 1) + ").";
+            System.out.println(text);
+
+
+            for (int i = 0; i < codeLength; i++) {
+                int temp = new Random().nextInt(numberOfLetters - 1);
                 code.append(digitBase.charAt(temp));
                 digitBase.deleteCharAt(temp);
             }
