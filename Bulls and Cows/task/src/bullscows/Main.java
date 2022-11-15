@@ -117,6 +117,7 @@ public class Main {
         } else {
 
             if (bull == code.length()) {
+                System.out.println("Grade: " + bull + " bulls");
                 System.out.println("Congratulations! You guessed the secret code.");
             } else {
 
