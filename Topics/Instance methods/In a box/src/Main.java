@@ -7,6 +7,6 @@ class Box {
 
     // write a method here
     double getVolume() {
-        return  this.height * this.width * this.length;
+        return this.height * this.width * this.length;
     }
 }
