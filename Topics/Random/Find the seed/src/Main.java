@@ -4,16 +4,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         // write your code here
-        int a, b, n, k;
-        a = scanner.nextInt(); // seed start
-        b = scanner.nextInt(); // seed end
-        n = scanner.nextInt(); // number of pseudorandom numbers
-        k = scanner.nextInt(); // range from 0 (inclusive) to k (exclusive)
+       
+        int a = scanner.nextInt(); // seed start
+        int b = scanner.nextInt(); // seed end
+        int n = scanner.nextInt(); // number of pseudorandom numbers
+        int k = scanner.nextInt(); // range from 0 (inclusive) to k (exclusive)
 
         int[] maximusFromSeeds;
         int[] minimumFromMaximusSeeds;
         minimumFromMaximusSeeds = showMaximumFromSeed(a, n, k); // for a
-        for ( int i = a + 1; i <= b; i++) { // for a + 1 to b
+        for (int i = a + 1; i <= b; i++) { // for a + 1 to b
             maximusFromSeeds = showMaximumFromSeed(i, n, k); // [0] seed, [1] max
             if (minimumFromMaximusSeeds[1] > maximusFromSeeds[1]) {
                 minimumFromMaximusSeeds = maximusFromSeeds;
