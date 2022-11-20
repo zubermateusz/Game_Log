@@ -6,7 +6,9 @@ class Main {
         Scanner scanner = new Scanner(System.in);
         String text = scanner.next();
         int digit = scanner.nextInt();
-        if (digit > text.length()) digit = text.length();
+        if (digit > text.length()) {
+            digit = text.length();
+        }
         System.out.println(text.substring(digit) + text.substring(0, digit));
     }
 }

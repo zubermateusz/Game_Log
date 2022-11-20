@@ -24,26 +24,26 @@ public class Main {
         String c = "12";
 
         String tempCode = "";
-        for (int i = 0; tempCode.length() < arr[0]; i++) { //wypelnienie ABABABAB
+        for (int i = 0; tempCode.length() < arr[0]; i++) {
             tempCode += a;
         }
         code += tempCode.substring(0, arr[0]);
 
         tempCode = "";
-        for (int i = 0; tempCode.length() < arr[1]; i++) { // wypelnienei ababababab
+        for (int i = 0; tempCode.length() < arr[1]; i++) {
             tempCode += b;
         }
         code += tempCode.substring(0, arr[1]);
 
         tempCode = "";
-        for (int i = 0; tempCode.length() < arr[2]; i++) { // wypelnienie 121212121212
+        for (int i = 0; tempCode.length() < arr[2]; i++) {
             tempCode += c;
         }
         code += tempCode.substring(0, arr[2]);
 
 
 
-        for (int i = 0; code.length() < arr[3]; i++) { //dokonczenie ABABABA
+        for (int i = 0; code.length() < arr[3]; i++) {
             if (code.length() == 0) {
                 code += a;
             } else {
