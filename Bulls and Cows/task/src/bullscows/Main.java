@@ -14,51 +14,42 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input the length of the secret code:");
-        int numberOfCodeDigits = scanner.nextInt();// pobranie od gracza dlugosci kodu
+        try {
+            int numberOfCodeDigits = scanner.nextInt();// pobranie od gracza dlugosci kodu
+            if (numberOfCodeDigits < 1) {
+                System.out.println("Error: ");
+                System.exit(0);
+            }
+            System.out.println("Input the number of possible symbols in the code:");
+            int numberOfLetters = scanner.nextInt();
 
-        System.out.println("Input the number of possible symbols in the code:");
-        int numberOfLetters = scanner.nextInt();
+            if (numberOfLetters < 37) { //przerwanie jesli gracz bedzie chcial zbudowac kod z wiecej niz 36 unikalnych znakow
+                if (numberOfLetters >= numberOfCodeDigits) { //przerwanie jesli gracz poda zbyt malo ukinalnych znakow do budowy kodu
+                    System.out.println("Okay, let's start a game!");
 
-        System.out.println("Okay, let's start a game!");
+                    StringBuilder secretCode = generateCode(numberOfCodeDigits, numberOfLetters);// inicjalizacja miejsca na secretCode
+                    StringBuilder playerCode;
 
-        StringBuilder secretCode = generateCode(numberOfCodeDigits, numberOfLetters);//{2, 4, 7, 3}; // = new int[4]; // inicjalizacja miejsca na secretCode
-        StringBuilder playerCode;
-
-        int turn = 0;
-        do {
-            System.out.println("Turn " + ++turn + ":");
-            playerCode = getCodeFromPlayer();
-            checkCodes(secretCode, playerCode);
-            endGame(secretCode, bull, cows);
-        } while (bull != numberOfCodeDigits);
-
-        //secretCode = getCodeFromPlayer(); // pobranie SecretCode od gracza i wpisanie do tablicy
-
-        //int[] guessCode = getCodeFromPlayer(); // pobranie quessCode od gracza i wpisanie do tablicy
-        //checkCodes(secretCode, guessCode); // porownanie kodow
-
-        //endGame(secretCode, bull, cows); // wyswietlenie wyniku konczacego rozgrywke
-        //win(secretCode);
-
-/*        System.out.println("The secret code is prepared: ****.");
-
-        System.out.println("Turn 1. Answer:\n" +
-                "1234\n" +
-                "Grade: 1 cow.");
-
-        System.out.println("Turn 3. Answer:\n" +
-                "9012\n" +
-                "Grade: 1 bull and 1 cow.");
-
-        System.out.println("Turn 7. Answer:\n" +
-                "9305\n" +
-                "Grade: 4 bulls.");
-        System.out.println("Turn 7. Answer:\n" +
-                "9305\n" +
-                "Grade: 4 bulls.");
-        //win(secretCode); // wyswietla tekst wygranej
-        System.out.println("Congrats! The secret code is 9305.");
-*/
+                    int turn = 0;
+                    do {
+                        System.out.println("Turn " + ++turn + ":");
+                        playerCode = getCodeFromPlayer();
+                        if (playerCode.length() != numberOfCodeDigits) { //przerwanie jesli gracz poda za krotki lub za dlugi kod
+                            System.out.printf("Error: the code has got d% digits", numberOfCodeDigits);
+                            break;
+                        }
+                        checkCodes(secretCode, playerCode);
+                        endGame(secretCode, bull, cows);
+                    } while (bull != numberOfCodeDigits);
+                } else {
+                    System.out.printf("Error: it's not possible to generate a code with a length of %d with %d unique symbols.", numberOfCodeDigits, numberOfLetters);
+                }
+            } else {
+                System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            }
+        }catch (InputMismatchException e) {
+            System.out.println("Error: isn't a valid number.");
+        }
     }
 
     private static StringBuilder generateCode(int codeLength, int numberOfLetters) {
@@ -70,7 +61,7 @@ public class Main {
         } else {
             StringBuilder digitBase = new StringBuilder("1234567890");
             StringBuilder lettersBase = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
-            digitBase.append(lettersBase);
+            StringBuilder digitBaseForGenerate = new StringBuilder(digitBase.append(lettersBase).substring(0, numberOfLetters));
             String text = "The secret is prepared: ";
             for (int i = 0; i < codeLength; i++) {
                 text += "*";
@@ -80,9 +71,9 @@ public class Main {
 
 
             for (int i = 0; i < codeLength; i++) {
-                int temp = new Random().nextInt(numberOfLetters - 1);
-                code.append(digitBase.charAt(temp));
-                digitBase.deleteCharAt(temp);
+                int temp = new Random().nextInt(digitBaseForGenerate.length() - 1);
+                code.append(digitBaseForGenerate.charAt(temp));
+                digitBaseForGenerate.deleteCharAt(temp);
             }
         }
         return code;
@@ -131,17 +122,10 @@ public class Main {
                 System.out.println("Congratulations! You guessed the secret code.");
             } else {
                 System.out.println("Grade: " + bull + " bulls" + " and " + cows + " cows");
-/*                System.out.print("Grade: ");
-                if (bull == 1) System.out.print(bull + " bull");
-                if (cows == 1) System.out.print(" and " + cows + " cow");
 
-                if (bull > 1) System.out.print(bull + " bulls");
-                if (cows > 1) System.out.print(" and " + cows + " cows ");
-*/
            }
         }
-        // System.out.print("The secret code is ".concat(printCode(code)));
-        //System.out.println();
+
     } //wyswietlenie Grade:/None.  bull(s) and cow(s). The secret code is code
 
     private static String printCode(StringBuilder code) {
